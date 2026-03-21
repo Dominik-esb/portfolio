@@ -36,6 +36,7 @@ export default function DronePage() {
           unoptimized={HERO_SRC.startsWith('https://')}
         />
         <div
+          aria-hidden="true"
           className="absolute inset-0"
           style={{
             background:

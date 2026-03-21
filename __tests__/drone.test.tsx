@@ -37,4 +37,9 @@ describe('Drone page', () => {
     const back = screen.getByRole('link', { name: /back|dominik|home/i })
     expect(back).toHaveAttribute('href', '/')
   })
+
+  it('renders contact links', () => {
+    render(<DronePage />)
+    expect(screen.getByRole('link', { name: /github/i })).toBeInTheDocument()
+  })
 })
