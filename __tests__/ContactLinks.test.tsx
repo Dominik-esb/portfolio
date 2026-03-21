@@ -22,4 +22,12 @@ describe('ContactLinks', () => {
     const links = screen.getAllByRole('link')
     links.forEach(link => expect(link).toHaveAttribute('target', '_blank'))
   })
+
+  it('sets rel="noopener noreferrer" on all links', () => {
+    render(<ContactLinks />)
+    const links = screen.getAllByRole('link')
+    links.forEach(link =>
+      expect(link).toHaveAttribute('rel', 'noopener noreferrer')
+    )
+  })
 })
