@@ -13,7 +13,7 @@ export default function SplitLanding() {
       <Link
         href="/drone"
         aria-label="Go to Drone"
-        className="absolute inset-0 block focus-visible:outline focus-visible:outline-2 focus-visible:outline-sky-700"
+        className="absolute inset-0 block group"
         style={{
           clipPath: 'polygon(0 0, 53% 0, 47% 100%, 0 100%)',
           background:
@@ -26,7 +26,7 @@ export default function SplitLanding() {
         onMouseLeave={() => setHovered(null)}
       >
         <div
-          className="absolute inset-0 flex flex-col items-center justify-center"
+          className="absolute inset-0 flex flex-col items-center justify-center rounded-lg group-focus-visible:ring-2 group-focus-visible:ring-sky-700 group-focus-visible:ring-inset"
           style={{
             paddingRight: '8%',
             transform: hovered === 'drone' ? 'scale(1.02)' : 'scale(1)',
@@ -48,7 +48,7 @@ export default function SplitLanding() {
       <Link
         href="/it"
         aria-label="Go to IT"
-        className="absolute inset-0 block focus-visible:outline focus-visible:outline-2 focus-visible:outline-sky-700"
+        className="absolute inset-0 block group"
         style={{
           clipPath: 'polygon(53% 0, 100% 0, 100% 100%, 47% 100%)',
           background:
@@ -61,7 +61,7 @@ export default function SplitLanding() {
         onMouseLeave={() => setHovered(null)}
       >
         <div
-          className="absolute inset-0 flex flex-col items-center justify-center"
+          className="absolute inset-0 flex flex-col items-center justify-center rounded-lg group-focus-visible:ring-2 group-focus-visible:ring-sky-700 group-focus-visible:ring-inset"
           style={{
             paddingLeft: '8%',
             transform: hovered === 'it' ? 'scale(1.02)' : 'scale(1)',
