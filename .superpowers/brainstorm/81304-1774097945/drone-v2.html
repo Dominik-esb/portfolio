@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Drone Page Direction</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #0f1117; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; padding: 24px; color: #e2e8f0; }
+  h2 { font-size: 1.3em; font-weight: 700; margin-bottom: 6px; color: #f1f5f9; }
+  .subtitle { color: #64748b; font-size: 0.85em; margin-bottom: 24px; }
+  .options { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .option {
+    border-radius: 12px; overflow: hidden; border: 2px solid transparent;
+    cursor: pointer; transition: border-color 0.2s, transform 0.2s;
+  }
+  .option:hover { border-color: #38bdf8; transform: translateY(-2px); }
+  .option.selected { border-color: #0ea5e9; box-shadow: 0 0 0 3px rgba(14,165,233,0.2); }
+  .option-label { padding: 12px 14px; background: #1e293b; }
+  .option-label h3 { font-size: 0.82em; font-weight: 700; color: #f1f5f9; margin-bottom: 3px; }
+  .option-label p { font-size: 0.68em; color: #64748b; line-height: 1.4; }
+  .letter {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 22px; height: 22px; background: #0ea5e9; border-radius: 50%;
+    font-size: 0.65em; font-weight: 800; color: white; margin-right: 6px; float: left; margin-top: 1px;
+  }
+  .selected-indicator {
+    position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+    background: #0ea5e9; color: white; padding: 8px 20px; border-radius: 20px;
+    font-size: 0.8em; display: none;
+  }
+</style>
+</head>
+<body>
+
+<h2>Drone Page — Visual Direction</h2>
+<p class="subtitle">Which approach fits the premium drone business feel you're after?</p>
+
+<div class="options">
+
+  <!-- Option A: Cinematic hero with real aerial photo -->
+  <div class="option" onclick="toggleSelect(this)" data-choice="a">
+    <div style="height:260px;position:relative;overflow:hidden;">
+      <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80"
+           style="width:100%;height:100%;object-fit:cover;" alt="Aerial view">
+      <div style="position:absolute;inset:0;background:linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.7) 100%);">
+      </div>
+      <div style="position:absolute;bottom:0;left:0;right:0;padding:20px;">
+        <div style="color:rgba(255,255,255,0.7);font-size:0.6em;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px;">Aerial Services</div>
+        <div style="color:white;font-size:1.1em;font-weight:800;line-height:1.2;">Professional<br>Drone Photography</div>
+        <div style="margin-top:8px;display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,0.15);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.2);border-radius:20px;padding:3px 10px;">
+          <span style="font-size:0.7em;">✈</span>
+          <span style="color:white;font-size:0.58em;font-weight:600;letter-spacing:1px;">DOC CERTIFIED</span>
+        </div>
+      </div>
+    </div>
+    <div class="option-label">
+      <h3><span class="letter">A</span>Cinematic Hero — Real Aerial Photo</h3>
+      <p>Full-bleed aerial photo hero with overlay text. Scroll reveals bright white service sections below. Photography speaks for itself.</p>
+    </div>
+  </div>
+
+  <!-- Option B: 3D drone on scroll with bright sections -->
+  <div class="option" onclick="toggleSelect(this)" data-choice="b">
+    <div style="height:260px;background:linear-gradient(135deg,#e0f2fe 0%,#bae6fd 40%,#7dd3fc 100%);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;">
+      <!-- Simulated 3D drone -->
+      <div id="drone3d" style="text-align:center;position:relative;z-index:2;">
+        <div id="droneBody" style="display:inline-block;transition:transform 0.1s;">
+          <svg width="120" height="80" viewBox="0 0 120 80" fill="none">
+            <!-- arms -->
+            <line x1="60" y1="40" x2="20" y2="15" stroke="#0369a1" stroke-width="3" stroke-linecap="round"/>
+            <line x1="60" y1="40" x2="100" y2="15" stroke="#0369a1" stroke-width="3" stroke-linecap="round"/>
+            <line x1="60" y1="40" x2="20" y2="65" stroke="#0369a1" stroke-width="3" stroke-linecap="round"/>
+            <line x1="60" y1="40" x2="100" y2="65" stroke="#0369a1" stroke-width="3" stroke-linecap="round"/>
+            <!-- rotors -->
+            <ellipse cx="20" cy="15" rx="14" ry="4" fill="rgba(3,105,161,0.3)" stroke="#0369a1" stroke-width="1.5"/>
+            <ellipse cx="100" cy="15" rx="14" ry="4" fill="rgba(3,105,161,0.3)" stroke="#0369a1" stroke-width="1.5"/>
+            <ellipse cx="20" cy="65" rx="14" ry="4" fill="rgba(3,105,161,0.3)" stroke="#0369a1" stroke-width="1.5"/>
+            <ellipse cx="100" cy="65" rx="14" ry="4" fill="rgba(3,105,161,0.3)" stroke="#0369a1" stroke-width="1.5"/>
+            <!-- body -->
+            <rect x="44" y="28" width="32" height="24" rx="6" fill="#0369a1"/>
+            <rect x="50" y="32" width="20" height="12" rx="3" fill="#0ea5e9"/>
+            <!-- camera -->
+            <circle cx="60" cy="50" r="5" fill="#1e3a5f"/>
+            <circle cx="60" cy="50" r="3" fill="#38bdf8"/>
+          </svg>
+        </div>
+        <div style="color:#0c4a6e;font-size:0.65em;font-weight:700;margin-top:8px;letter-spacing:1px;">SCROLL TO EXPLORE ↓</div>
+      </div>
+      <!-- floating rings -->
+      <div style="position:absolute;width:200px;height:200px;border:1px solid rgba(3,105,161,0.15);border-radius:50%;top:50%;left:50%;transform:translate(-50%,-50%);animation:ring 3s ease-in-out infinite;"></div>
+      <div style="position:absolute;width:150px;height:150px;border:1px solid rgba(3,105,161,0.2);border-radius:50%;top:50%;left:50%;transform:translate(-50%,-50%);animation:ring 3s ease-in-out 1s infinite;"></div>
+      <style>
+        @keyframes ring { 0%,100%{transform:translate(-50%,-50%) scale(1);opacity:0.5} 50%{transform:translate(-50%,-50%) scale(1.1);opacity:1} }
+        @keyframes hover { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+        #droneBody { animation: hover 2.5s ease-in-out infinite; }
+      </style>
+    </div>
+    <div class="option-label">
+      <h3><span class="letter">B</span>3D Drone Hero — Scroll Animation</h3>
+      <p>Bright sky-blue background with an animated drone that floats and reacts to scroll. Below: bright white sections with service details.</p>
+    </div>
+  </div>
+
+  <!-- Option C: Split photo gallery hero -->
+  <div class="option" onclick="toggleSelect(this)" data-choice="c">
+    <div style="height:260px;position:relative;overflow:hidden;display:grid;grid-template-columns:1fr 1fr;gap:2px;">
+      <img src="https://images.unsplash.com/photo-1508444845599-5c89863b1c44?w=300&q=80"
+           style="width:100%;height:100%;object-fit:cover;" alt="Aerial house">
+      <div style="display:grid;grid-template-rows:1fr 1fr;gap:2px;">
+        <img src="https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=300&q=80"
+             style="width:100%;height:100%;object-fit:cover;" alt="Drone in sky">
+        <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=300&q=80"
+             style="width:100%;height:100%;object-fit:cover;" alt="Aerial city">
+      </div>
+      <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(12,74,110,0.7) 0%,transparent 60%);">
+        <div style="padding:16px;">
+          <div style="color:white;font-size:1em;font-weight:800;line-height:1.2;text-shadow:0 2px 8px rgba(0,0,0,0.5);">Dominik<br>Aerial</div>
+        </div>
+      </div>
+    </div>
+    <div class="option-label">
+      <h3><span class="letter">C</span>Photo Grid Hero — Work Speaks First</h3>
+      <p>Lead with a photo grid of real work. Clients immediately see the quality. Bright, visual-first, very professional.</p>
+    </div>
+  </div>
+
+  <!-- Option D: Combo — 3D drone + real photos on scroll -->
+  <div class="option" onclick="toggleSelect(this)" data-choice="d">
+    <div style="height:260px;background:linear-gradient(160deg,#f0f9ff 0%,#e0f2fe 100%);position:relative;overflow:hidden;">
+      <!-- Top: drone animation hint -->
+      <div style="padding:14px 16px;">
+        <div style="color:#0284c7;font-size:0.6em;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px;">Aerial Services · DOC Certified</div>
+        <div style="color:#0c4a6e;font-size:0.95em;font-weight:800;">Professional<br>Drone Photography</div>
+        <div style="margin-top:6px;display:flex;gap:6px;">
+          <span style="background:#0284c7;color:white;border-radius:4px;padding:2px 8px;font-size:0.55em;font-weight:600;">Mavic 4 Pro</span>
+          <span style="background:#0ea5e9;color:white;border-radius:4px;padding:2px 8px;font-size:0.55em;font-weight:600;">Insta360</span>
+        </div>
+      </div>
+      <!-- Scroll reveal photos row -->
+      <div style="position:absolute;bottom:0;left:0;right:0;display:flex;gap:4px;padding:0 12px 12px;">
+        <img src="https://images.unsplash.com/photo-1508444845599-5c89863b1c44?w=200&q=80"
+             style="width:33%;height:90px;object-fit:cover;border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,0.15);" alt="">
+        <img src="https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=200&q=80"
+             style="width:33%;height:90px;object-fit:cover;border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,0.15);" alt="">
+        <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=200&q=80"
+             style="width:33%;height:90px;object-fit:cover;border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,0.15);" alt="">
+      </div>
+    </div>
+    <div class="option-label">
+      <h3><span class="letter">D</span>Bright Hero + Scroll-in Photo Gallery</h3>
+      <p>Clean bright header with animated drone, then photos scroll in as you go down. Best of both — branding + visual proof.</p>
+    </div>
+  </div>
+
+</div>
+
+<div id="sel-indicator" class="selected-indicator"></div>
+
+<script>
+function toggleSelect(el) {
+  document.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  const choice = el.dataset.choice.toUpperCase();
+  const indicator = document.getElementById('sel-indicator');
+  indicator.style.display = 'block';
+  indicator.textContent = 'Selected: Option ' + choice;
+
+  if (window.__recordChoice) window.__recordChoice(el.dataset.choice, el.querySelector('h3').textContent.trim());
+}
+</script>
+
+</body>
+</html>

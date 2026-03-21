@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Subpage Concepts v2</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #0f1117; color: #e2e8f0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; padding: 24px; }
+
+  h2 { font-size: 1.3em; font-weight: 700; margin-bottom: 6px; color: #f1f5f9; }
+  .subtitle { color: #64748b; font-size: 0.85em; margin-bottom: 24px; }
+
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+  /* ─── IT PAGE MOCKUP ─────────────────────── */
+  .it-mockup {
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #1e293b;
+    position: relative;
+    height: 420px;
+  }
+
+  #it-canvas {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+  }
+
+  .it-content {
+    position: relative; z-index: 2;
+    padding: 24px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .it-back { color: #475569; font-size: 0.7em; margin-bottom: 20px; }
+
+  .it-title { font-size: 1.3em; font-weight: 800; letter-spacing: 1px; color: #f1f5f9; }
+  .it-sub { font-size: 0.72em; color: #38bdf8; margin-top: 4px; margin-bottom: 22px; letter-spacing: 0.5px; }
+
+  .skill-row { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 20px; }
+  .skill-badge {
+    padding: 4px 10px; border-radius: 20px; font-size: 0.65em; font-weight: 600;
+    letter-spacing: 0.5px; border: 1px solid;
+  }
+  .skill-blue  { background: rgba(37,99,235,0.15); color: #93c5fd; border-color: rgba(37,99,235,0.4); }
+  .skill-green { background: rgba(22,163,74,0.15);  color: #86efac; border-color: rgba(22,163,74,0.4); }
+  .skill-purple{ background: rgba(124,58,237,0.15); color: #c4b5fd; border-color: rgba(124,58,237,0.4); }
+
+  .it-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 8px;
+    padding: 12px 14px;
+    margin-bottom: 10px;
+    backdrop-filter: blur(6px);
+  }
+  .it-card-label { color: #94a3b8; font-size: 0.6em; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 4px; }
+  .it-card-value { color: #e2e8f0; font-size: 0.72em; }
+
+  .it-links { display: flex; gap: 8px; margin-top: auto; }
+  .it-link {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 6px; padding: 5px 12px;
+    color: #94a3b8; font-size: 0.65em;
+    cursor: pointer;
+  }
+
+  /* ─── DRONE PAGE MOCKUP ──────────────────── */
+  .drone-mockup {
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+    height: 420px;
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
+  }
+
+  .drone-hero {
+    background: linear-gradient(160deg, #0c4a6e 0%, #0369a1 60%, #0ea5e9 100%);
+    padding: 20px 24px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .drone-hero::after {
+    content: '';
+    position: absolute;
+    bottom: -1px; left: 0; right: 0;
+    height: 24px;
+    background: white;
+    clip-path: polygon(0 100%, 100% 0, 100% 100%);
+  }
+
+  .drone-back { color: rgba(255,255,255,0.5); font-size: 0.68em; margin-bottom: 14px; }
+  .drone-eyebrow { color: #7dd3fc; font-size: 0.62em; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 6px; }
+  .drone-title { color: white; font-size: 1.25em; font-weight: 800; letter-spacing: -0.5px; line-height: 1.2; }
+  .drone-cert {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 20px;
+    padding: 3px 10px;
+    font-size: 0.6em; color: white;
+    margin-top: 10px;
+    backdrop-filter: blur(4px);
+  }
+
+  .drone-body { padding: 16px 20px; flex: 1; overflow: hidden; }
+  .drone-section-label {
+    font-size: 0.6em; text-transform: uppercase; letter-spacing: 2px;
+    color: #94a3b8; margin-bottom: 10px; margin-top: 4px;
+  }
+
+  .service-card {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 12px 14px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    margin-bottom: 8px;
+  }
+  .service-icon {
+    width: 36px; height: 36px; border-radius: 8px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1em;
+  }
+  .icon-blue  { background: #eff6ff; }
+  .icon-sky   { background: #f0f9ff; }
+
+  .service-title { font-size: 0.72em; font-weight: 700; color: #0f172a; }
+  .service-desc  { font-size: 0.6em; color: #64748b; margin-top: 2px; line-height: 1.4; }
+  .service-tag   {
+    display: inline-block; margin-top: 4px;
+    background: #f0f9ff; color: #0284c7;
+    border-radius: 4px; padding: 1px 6px; font-size: 0.55em; font-weight: 600;
+  }
+
+  .drone-footer {
+    padding: 10px 20px;
+    border-top: 1px solid #f1f5f9;
+    display: flex; gap: 8px;
+  }
+  .drone-link {
+    background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px;
+    padding: 4px 12px; color: #475569; font-size: 0.62em;
+  }
+
+  .label { font-size: 0.7em; color: #94a3b8; text-align: center; margin-top: 8px; }
+</style>
+</head>
+<body>
+
+<h2>Subpage Concepts v2</h2>
+<p class="subtitle">IT: animated particle grid background. Drone: premium business feel.</p>
+
+<div class="split">
+
+  <!-- IT PAGE -->
+  <div>
+    <div class="it-mockup">
+      <canvas id="it-canvas"></canvas>
+      <div class="it-content">
+        <div class="it-back">← Dominik / IT</div>
+        <div class="it-title">Infrastructure &amp; DevOps</div>
+        <div class="it-sub">Building reliable, observable systems at scale</div>
+
+        <div class="skill-row">
+          <span class="skill-badge skill-blue">Kubernetes</span>
+          <span class="skill-badge skill-blue">CI/CD</span>
+          <span class="skill-badge skill-green">Prometheus</span>
+          <span class="skill-badge skill-green">Grafana</span>
+          <span class="skill-badge skill-green">Mimir</span>
+          <span class="skill-badge skill-purple">Open Source</span>
+        </div>
+
+        <div class="it-card">
+          <div class="it-card-label">Observability Stack</div>
+          <div class="it-card-value">Prometheus · Grafana · Mimir · Alertmanager</div>
+        </div>
+        <div class="it-card">
+          <div class="it-card-label">Open Source</div>
+          <div class="it-card-value">github.com/Dominik-esb</div>
+        </div>
+
+        <div class="it-links">
+          <div class="it-link">GitHub</div>
+          <div class="it-link">LinkedIn</div>
+        </div>
+      </div>
+    </div>
+    <p class="label">Animated particle/grid bg (moves slowly)</p>
+  </div>
+
+  <!-- DRONE PAGE -->
+  <div>
+    <div class="drone-mockup">
+      <div class="drone-hero">
+        <div class="drone-back">← Dominik / Drone</div>
+        <div class="drone-eyebrow">Aerial Services</div>
+        <div class="drone-title">Professional<br>Drone Photography</div>
+        <div class="drone-cert">✈ DOC Certified Pilot</div>
+      </div>
+
+      <div class="drone-body">
+        <div class="drone-section-label">Services</div>
+
+        <div class="service-card">
+          <div class="service-icon icon-blue">🏠</div>
+          <div>
+            <div class="service-title">Real Estate Photography</div>
+            <div class="service-desc">High-resolution aerial imagery for listings, developments &amp; architecture.</div>
+            <span class="service-tag">Mavic 4 Pro</span>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon icon-sky">🔄</div>
+          <div>
+            <div class="service-title">Indoor 360° Mapping</div>
+            <div class="service-desc">Immersive virtual walkthroughs for properties &amp; commercial spaces.</div>
+            <span class="service-tag">Insta360</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="drone-footer">
+        <div class="drone-link">GitHub</div>
+        <div class="drone-link">LinkedIn</div>
+      </div>
+    </div>
+    <p class="label">Premium business look — blue hero, white body, clean cards</p>
+  </div>
+
+</div>
+
+<script>
+// Animated particle grid for IT canvas
+const canvas = document.getElementById('it-canvas');
+const ctx = canvas.getContext('2d');
+let W, H, dots = [], animId;
+
+function resize() {
+  const r = canvas.parentElement.getBoundingClientRect();
+  W = canvas.width = r.width;
+  H = canvas.height = r.height;
+}
+
+function initDots() {
+  dots = [];
+  const cols = 14, rows = 10;
+  for (let i = 0; i < cols; i++) {
+    for (let j = 0; j < rows; j++) {
+      dots.push({
+        x: (i / (cols - 1)) * W,
+        y: (j / (rows - 1)) * H,
+        ox: (i / (cols - 1)) * W,
+        oy: (j / (rows - 1)) * H,
+        vx: (Math.random() - 0.5) * 0.3,
+        vy: (Math.random() - 0.5) * 0.3,
+        r: Math.random() * 1.5 + 0.5,
+      });
+    }
+  }
+}
+
+function draw() {
+  ctx.clearRect(0, 0, W, H);
+  ctx.fillStyle = '#0d1520';
+  ctx.fillRect(0, 0, W, H);
+
+  // Update
+  dots.forEach(d => {
+    d.x += d.vx; d.y += d.vy;
+    if (Math.abs(d.x - d.ox) > 18) d.vx *= -1;
+    if (Math.abs(d.y - d.oy) > 18) d.vy *= -1;
+  });
+
+  // Lines
+  const maxDist = 80;
+  for (let i = 0; i < dots.length; i++) {
+    for (let j = i + 1; j < dots.length; j++) {
+      const dx = dots[i].x - dots[j].x;
+      const dy = dots[i].y - dots[j].y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < maxDist) {
+        ctx.beginPath();
+        ctx.moveTo(dots[i].x, dots[i].y);
+        ctx.lineTo(dots[j].x, dots[j].y);
+        ctx.strokeStyle = `rgba(56,189,248,${0.12 * (1 - dist / maxDist)})`;
+        ctx.lineWidth = 0.5;
+        ctx.stroke();
+      }
+    }
+  }
+
+  // Dots
+  dots.forEach(d => {
+    ctx.beginPath();
+    ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(148,210,252,0.5)';
+    ctx.fill();
+  });
+
+  animId = requestAnimationFrame(draw);
+}
+
+resize();
+initDots();
+draw();
+</script>
+</body>
+</html>
