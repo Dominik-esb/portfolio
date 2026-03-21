@@ -12,8 +12,8 @@ export default function SplitLanding() {
       {/* Drone half — left */}
       <Link
         href="/drone"
-        aria-label="Drone"
-        className="absolute inset-0 block"
+        aria-label="Go to Drone"
+        className="absolute inset-0 block focus-visible:outline focus-visible:outline-2 focus-visible:outline-sky-700"
         style={{
           clipPath: 'polygon(0 0, 53% 0, 47% 100%, 0 100%)',
           background:
@@ -21,13 +21,19 @@ export default function SplitLanding() {
               ? 'linear-gradient(160deg, #bae6fd 0%, #7dd3fc 100%)'
               : 'linear-gradient(160deg, #e0f2fe 0%, #bae6fd 100%)',
           transition: 'background 0.3s ease',
-          transform: hovered === 'drone' ? 'scale(1.02)' : 'scale(1)',
-          transformOrigin: 'left center',
         }}
         onMouseEnter={() => setHovered('drone')}
         onMouseLeave={() => setHovered(null)}
       >
-        <div className="absolute inset-0 flex flex-col items-center justify-center" style={{ paddingRight: '8%' }}>
+        <div
+          className="absolute inset-0 flex flex-col items-center justify-center"
+          style={{
+            paddingRight: '8%',
+            transform: hovered === 'drone' ? 'scale(1.02)' : 'scale(1)',
+            transformOrigin: 'left center',
+            transition: 'transform 0.3s ease',
+          }}
+        >
           <span className="text-5xl mb-4">🚁</span>
           <span
             className="text-sm font-bold tracking-[4px] uppercase"
@@ -41,8 +47,8 @@ export default function SplitLanding() {
       {/* IT half — right */}
       <Link
         href="/it"
-        aria-label="IT"
-        className="absolute inset-0 block"
+        aria-label="Go to IT"
+        className="absolute inset-0 block focus-visible:outline focus-visible:outline-2 focus-visible:outline-sky-700"
         style={{
           clipPath: 'polygon(53% 0, 100% 0, 100% 100%, 47% 100%)',
           background:
@@ -50,13 +56,19 @@ export default function SplitLanding() {
               ? 'linear-gradient(160deg, #bae6fd 0%, #7dd3fc 100%)'
               : 'linear-gradient(160deg, #e0f2fe 0%, #bae6fd 100%)',
           transition: 'background 0.3s ease',
-          transform: hovered === 'it' ? 'scale(1.02)' : 'scale(1)',
-          transformOrigin: 'right center',
         }}
         onMouseEnter={() => setHovered('it')}
         onMouseLeave={() => setHovered(null)}
       >
-        <div className="absolute inset-0 flex flex-col items-center justify-center" style={{ paddingLeft: '8%' }}>
+        <div
+          className="absolute inset-0 flex flex-col items-center justify-center"
+          style={{
+            paddingLeft: '8%',
+            transform: hovered === 'it' ? 'scale(1.02)' : 'scale(1)',
+            transformOrigin: 'right center',
+            transition: 'transform 0.3s ease',
+          }}
+        >
           <span className="text-5xl mb-4">⚙️</span>
           <span
             className="text-sm font-bold tracking-[4px] uppercase"
