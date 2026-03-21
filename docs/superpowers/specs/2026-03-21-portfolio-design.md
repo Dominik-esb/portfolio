@@ -32,7 +32,7 @@ A personal portfolio site with two distinct domains: IT/DevOps background and a 
 - Clicking either half navigates to the respective subpage (`/drone` or `/it`)
 
 **Contact**
-- GitHub and LinkedIn links in a minimal floating bar or footer
+- GitHub and LinkedIn links in a minimal floating bar fixed to the bottom of the viewport
   - GitHub: https://github.com/Dominik-esb
   - LinkedIn: https://www.linkedin.com/in/dominik-eisenberg-93001422b
 
@@ -76,8 +76,6 @@ A personal portfolio site with two distinct domains: IT/DevOps background and a 
   - **Indoor 360° Mapping** — Immersive virtual walkthroughs for properties & commercial spaces. Equipment: Insta360
 - GitHub + LinkedIn links
 
-**Future direction (noted):** Can evolve into a deeper real estate business page with property showcase gallery, pricing/packages, client inquiry form, before/after aerial comparisons.
-
 ---
 
 ## Architecture
@@ -95,7 +93,7 @@ A personal portfolio site with two distinct domains: IT/DevOps background and a 
 │   ├── ParticleCanvas.tsx # Animated particle grid (IT bg)
 │   └── ContactLinks.tsx  # GitHub + LinkedIn links
 └── public/
-    └── drone-hero.jpg    # Aerial hero image
+    └── drone-hero.jpg    # Aerial hero image (must be provided before build; use an Unsplash placeholder during development)
 ```
 
 ## Routing
@@ -122,3 +120,4 @@ A personal portfolio site with two distinct domains: IT/DevOps background and a 
 - Project case studies
 - CMS integration
 - Analytics
+- Drone page real estate business expansion (property gallery, pricing/packages, client inquiry form, before/after comparisons — future phase)
