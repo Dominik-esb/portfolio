@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git -C /Users/dominikeisenberg/Documents/Coding/portfolio add docs/superpowers/specs/2026-03-21-portfolio-design.md)",
+      "Bash(git -C:*)",
+      "Read(//private/tmp/**)",
+      "Bash(npx create-next-app@latest portfolio-temp --typescript --tailwind --eslint --app --no-src-dir --import-alias \"@/*\" --yes -- --legacy-peer-deps)",
+      "Bash(rm -rf /tmp/portfolio-temp)",
+      "Bash(npx create-next-app@latest portfolio-temp --typescript --tailwind --eslint --app --no-src-dir --import-alias \"@/*\" --yes)",
+      "Bash(npx create-next-app@latest . --typescript --tailwind --eslint --app --no-src-dir --import-alias \"@/*\" --yes)",
+      "Bash(rm -rf /tmp/portfolio-tmp)",
+      "Bash(mkdir /tmp/portfolio-tmp)",
+      "Bash(npm_config_legacy_peer_deps=true npx create-next-app@15 . --typescript --tailwind --eslint --app --no-src-dir --import-alias \"@/*\" --yes)",
+      "Bash(npm run:*)",
+      "Bash(git checkout:*)",
+      "Bash(npm test:*)",
+      "Bash(npx jest:*)",
+      "Bash(python3 -c \"import sys,json; data=json.load\\(sys.stdin\\); mapper=data.get\\(''''configs'''',[{}]\\)[0].get\\(''''moduleNameMapper'''',{}\\); [print\\(k,''''->'''',v\\) for k,v in mapper.items\\(\\)]\")",
+      "Bash(npx tsc:*)"
+    ]
+  },
+  "disabledMcpjsonServers": [
+    "MCP_DOCKER"
+  ]
+}

@@ -12,7 +12,9 @@ jest.mock('next/image', () => ({
 describe('Drone page', () => {
   it('renders the main headline', () => {
     render(<DronePage />)
-    expect(screen.getByText('Professional Drone Photography')).toBeInTheDocument()
+    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(
+      'Professional Drone Photography'
+    )
   })
 
   it('renders DOC certified pilot badge', () => {
