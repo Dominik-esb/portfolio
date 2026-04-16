@@ -19,7 +19,7 @@ export default function DroneFrameHero() {
   const isReady = loadedCount >= FRAME_COUNT
   const loadPct = loadedCount / FRAME_COUNT
 
-  /* ─── canvas resize ────────────────────────────────────────────── */
+  /* ─── canvas resize ───────────────────────────────────────────── */
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
@@ -30,7 +30,6 @@ export default function DroneFrameHero() {
       canvas.height = window.innerHeight * dpr
       canvas.style.width = `${window.innerWidth}px`
       canvas.style.height = `${window.innerHeight}px`
-      // redraw current frame after resize
       const idx = currentFrameRef.current
       if (idx >= 0) drawFrameIdx(idx)
     }
@@ -41,7 +40,7 @@ export default function DroneFrameHero() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  /* ─── draw helper ───────────────────────────────────────────────── */
+  /* ─── draw ────────────────────────────────────────────────────── */
   const drawFrameIdx = useCallback((index: number) => {
     const canvas = canvasRef.current
     if (!canvas) return
@@ -55,7 +54,6 @@ export default function DroneFrameHero() {
     const imgAR = img.naturalWidth / img.naturalHeight
     const canvasAR = cw / ch
 
-    // object-fit: cover
     let sx = 0, sy = 0, sw = img.naturalWidth, sh = img.naturalHeight
     if (canvasAR > imgAR) {
       sh = img.naturalWidth / canvasAR
@@ -68,7 +66,7 @@ export default function DroneFrameHero() {
     ctx.drawImage(img, sx, sy, sw, sh, 0, 0, cw, ch)
   }, [])
 
-  /* ─── preload ───────────────────────────────────────────────────── */
+  /* ─── preload ─────────────────────────────────────────────────── */
   useEffect(() => {
     const images: HTMLImageElement[] = new Array(FRAME_COUNT)
     let count = 0
@@ -79,7 +77,6 @@ export default function DroneFrameHero() {
       img.onload = () => {
         count++
         setLoadedCount(count)
-        // draw first frame as soon as it's ready
         if (i === 0 && currentFrameRef.current < 0) {
           currentFrameRef.current = 0
           drawFrameIdx(0)
@@ -89,12 +86,10 @@ export default function DroneFrameHero() {
     }
 
     framesRef.current = images
-    return () => {
-      for (const img of images) img.onload = null
-    }
+    return () => { for (const img of images) img.onload = null }
   }, [drawFrameIdx])
 
-  /* ─── scroll ────────────────────────────────────────────────────── */
+  /* ─── scroll ──────────────────────────────────────────────────── */
   useEffect(() => {
     const handleScroll = () => {
       const section = sectionRef.current
@@ -122,196 +117,88 @@ export default function DroneFrameHero() {
     }
   }, [drawFrameIdx])
 
-  /* ─── re-draw last frame once fully loaded ──────────────────────── */
+  /* ─── re-draw on full load ────────────────────────────────────── */
   useEffect(() => {
-    if (isReady && currentFrameRef.current >= 0) {
-      drawFrameIdx(currentFrameRef.current)
-    }
+    if (isReady && currentFrameRef.current >= 0) drawFrameIdx(currentFrameRef.current)
   }, [isReady, drawFrameIdx])
 
-  // Overlay text fades out in first 25% of scroll, translates up
+  // Text fades/rises in first 25% of scroll — only opacity + transform (no colors)
   const textOpacity = Math.max(0, 1 - scrollProgress * 4)
   const textY = scrollProgress * -80
 
   return (
-    <section
-      ref={sectionRef}
-      style={{ height: '400vh', position: 'relative' }}
-    >
+    <section ref={sectionRef} style={{ height: '400vh', position: 'relative' }}>
       <div
-        style={{
-          position: 'sticky',
-          top: 0,
-          height: '100vh',
-          overflow: 'hidden',
-          background: '#0d0d0d',
-        }}
+        className="sticky top-0 h-screen overflow-hidden bg-[#0d0d0d]"
+        style={{ position: 'sticky' }}
       >
         {/* Frame canvas */}
-        <canvas
-          ref={canvasRef}
-          style={{ position: 'absolute', inset: 0, display: 'block' }}
-        />
+        <canvas ref={canvasRef} className="absolute inset-0 block" />
 
-        {/* Loading overlay */}
+        {/* Loading overlay — only shown until all frames ready */}
         {!isReady && (
-          <div
-            style={{
-              position: 'absolute',
-              inset: 0,
-              background: '#0d0d0d',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '1.25rem',
-              zIndex: 20,
-            }}
-          >
-            <p
-              style={{
-                color: 'rgba(255,255,255,0.3)',
-                fontSize: '0.65rem',
-                letterSpacing: '0.25em',
-                textTransform: 'uppercase',
-                fontFamily: 'var(--font-inter, sans-serif)',
-              }}
-            >
+          <div className="absolute inset-0 bg-[#0d0d0d] flex flex-col items-center justify-center gap-5 z-20">
+            <p className="text-white/30 text-[0.65rem] tracking-[0.25em] uppercase font-sans">
               Loading
             </p>
-            <div
-              style={{
-                width: 180,
-                height: 1.5,
-                background: 'rgba(255,255,255,0.08)',
-                borderRadius: 2,
-              }}
-            >
+            <div className="w-44 h-[1.5px] bg-white/[0.08] rounded-sm">
               <div
-                style={{
-                  height: '100%',
-                  background: '#38bdf8',
-                  borderRadius: 2,
-                  width: `${loadPct * 100}%`,
-                  transition: 'width 0.15s linear',
-                }}
+                className="h-full bg-sky-400 rounded-sm transition-[width] duration-150 ease-linear"
+                style={{ width: `${loadPct * 100}%` }}
               />
             </div>
-            <p
-              style={{
-                color: 'rgba(255,255,255,0.2)',
-                fontSize: '0.6rem',
-                letterSpacing: '0.1em',
-                fontFamily: 'var(--font-inter, sans-serif)',
-              }}
-            >
+            <p className="text-white/20 text-[0.6rem] tracking-[0.1em] font-sans">
               {Math.round(loadPct * 100)}%
             </p>
           </div>
         )}
 
-        {/* Bottom gradient + hero text */}
+        {/* Bottom gradient vignette */}
         <div
-          style={{
-            position: 'absolute',
-            inset: 0,
-            background:
-              'linear-gradient(to top, rgba(10,10,10,0.85) 0%, rgba(10,10,10,0.3) 45%, transparent 70%)',
-            pointerEvents: 'none',
-          }}
+          className="absolute inset-0 pointer-events-none bg-gradient-to-t from-[#0a0a0a]/85 via-[#0a0a0a]/30 to-transparent"
           aria-hidden="true"
         />
 
+        {/* Hero text overlay — fades out as user scrolls */}
         <div
+          className="absolute inset-0 flex flex-col justify-end p-[clamp(2rem,4vw,4rem)] pb-[clamp(3rem,6vw,5rem)]"
           style={{
-            position: 'absolute',
-            inset: 0,
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'flex-end',
-            padding: 'clamp(2rem, 4vw, 4rem)',
-            paddingBottom: 'clamp(3rem, 6vw, 5rem)',
             opacity: textOpacity,
             transform: `translateY(${textY}px)`,
             pointerEvents: scrollProgress > 0.1 ? 'none' : 'auto',
           }}
         >
-          <p
-            style={{
-              color: '#38bdf8',
-              fontSize: '0.65rem',
-              letterSpacing: '0.3em',
-              textTransform: 'uppercase',
-              marginBottom: '0.875rem',
-              fontFamily: 'var(--font-inter, sans-serif)',
-              fontWeight: 700,
-            }}
-          >
+          <p className="text-sky-400 text-[0.65rem] font-bold tracking-[0.3em] uppercase mb-3.5">
             Aerial Services
           </p>
 
           <h1
-            style={{
-              color: '#fff',
-              fontSize: 'clamp(2.75rem, 9vw, 5.5rem)',
-              fontWeight: 900,
-              lineHeight: 1.0,
-              marginBottom: '1.5rem',
-              fontFamily: 'var(--font-inter, sans-serif)',
-              textShadow: '0 2px 32px rgba(0,0,0,0.6)',
-              letterSpacing: '-0.02em',
-            }}
+            className="text-white font-black leading-none mb-6 tracking-[-0.02em] drone-h1-shadow"
+            style={{ fontSize: 'clamp(2.75rem, 9vw, 5.5rem)' }}
           >
             Professional
             <br />
             Drone
             <br />
-            <span style={{ color: '#38bdf8' }}>Photography</span>
+            <span className="text-sky-400">Photography</span>
           </h1>
 
           <p
-            style={{
-              color: 'rgba(255,255,255,0.55)',
-              fontSize: 'clamp(0.875rem, 1.5vw, 1.05rem)',
-              marginBottom: '2.25rem',
-              maxWidth: '400px',
-              lineHeight: 1.6,
-              fontFamily: 'var(--font-inter, sans-serif)',
-            }}
+            className="text-white/55 mb-9 max-w-[400px] leading-relaxed"
+            style={{ fontSize: 'clamp(0.875rem, 1.5vw, 1.05rem)' }}
           >
-            Cinematic aerial imagery for real estate,
-            events&nbsp;&amp;&nbsp;architecture.
+            Cinematic aerial imagery for real estate, events&nbsp;&amp;&nbsp;architecture.
           </p>
 
-          <div
-            style={{ display: 'flex', gap: '1.25rem', alignItems: 'center', flexWrap: 'wrap' }}
-          >
+          <div className="flex gap-5 items-center flex-wrap">
             <a
               href="#services"
-              style={{
-                padding: '0.75rem 1.875rem',
-                background: '#38bdf8',
-                color: '#0a0a0a',
-                borderRadius: '100px',
-                fontSize: '0.875rem',
-                fontWeight: 700,
-                textDecoration: 'none',
-                pointerEvents: 'auto',
-                letterSpacing: '0.01em',
-                fontFamily: 'var(--font-inter, sans-serif)',
-              }}
+              className="px-7 py-3 bg-sky-400 text-[#0a0a0a] rounded-full text-sm font-bold tracking-[0.01em] no-underline pointer-events-auto"
+              style={{ pointerEvents: 'auto' }}
             >
               View Services
             </a>
-            <span
-              style={{
-                color: 'rgba(255,255,255,0.35)',
-                fontSize: '0.7rem',
-                letterSpacing: '0.2em',
-                textTransform: 'uppercase',
-                fontFamily: 'var(--font-inter, sans-serif)',
-              }}
-            >
+            <span className="text-white/35 text-[0.7rem] tracking-[0.2em] uppercase">
               ✈ DOC Certified Pilot
             </span>
           </div>
@@ -319,65 +206,26 @@ export default function DroneFrameHero() {
 
         {/* Scroll hint */}
         <div
-          style={{
-            position: 'absolute',
-            bottom: '2.25rem',
-            right: 'clamp(1.5rem, 3vw, 3rem)',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: '0.5rem',
-            opacity: scrollProgress < 0.04 ? 1 : 0,
-            transition: 'opacity 0.4s',
-            pointerEvents: 'none',
-          }}
+          className="absolute bottom-9 right-[clamp(1.5rem,3vw,3rem)] flex flex-col items-center gap-2 pointer-events-none transition-opacity duration-300"
+          style={{ opacity: scrollProgress < 0.04 ? 1 : 0 }}
           aria-hidden="true"
         >
           <span
-            style={{
-              color: 'rgba(255,255,255,0.3)',
-              fontSize: '0.6rem',
-              letterSpacing: '0.25em',
-              textTransform: 'uppercase',
-              fontFamily: 'var(--font-inter, sans-serif)',
-              writingMode: 'vertical-rl',
-            }}
+            className="text-white/30 text-[0.6rem] tracking-[0.25em] uppercase"
+            style={{ writingMode: 'vertical-rl' }}
           >
             Scroll
           </span>
-          <div
-            style={{
-              width: 1,
-              height: 48,
-              background: 'rgba(255,255,255,0.15)',
-              borderRadius: 1,
-              overflow: 'hidden',
-              position: 'relative',
-            }}
-          >
+          <div className="w-px h-12 bg-white/15 rounded-sm overflow-hidden relative">
             <div className="drone-scroll-line" />
           </div>
         </div>
 
         {/* Progress bar */}
-        <div
-          style={{
-            position: 'absolute',
-            bottom: 0,
-            left: 0,
-            right: 0,
-            height: 2,
-            background: 'rgba(255,255,255,0.04)',
-          }}
-          aria-hidden="true"
-        >
+        <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-white/[0.04]" aria-hidden="true">
           <div
-            style={{
-              height: '100%',
-              background: 'rgba(56,189,248,0.5)',
-              width: `${scrollProgress * 100}%`,
-              transition: 'width 0.05s linear',
-            }}
+            className="h-full bg-sky-400/50 transition-[width] duration-[50ms] ease-linear"
+            style={{ width: `${scrollProgress * 100}%` }}
           />
         </div>
       </div>

@@ -29,3 +29,8 @@ html, body {
   border-radius: 1px;
   animation: droneScrollPulse 1.6s ease-in-out infinite;
 }
+
+/* Used for hero h1 text-shadow — inline style would be caught by Dark Reader */
+.drone-h1-shadow {
+  text-shadow: 0 2px 32px rgba(0, 0, 0, 0.6);
+}
