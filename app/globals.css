@@ -13,3 +13,19 @@ html, body {
   margin: 0;
   padding: 0;
 }
+
+@keyframes droneScrollPulse {
+  0%   { transform: translateY(-100%); opacity: 1; }
+  100% { transform: translateY(200%);  opacity: 0; }
+}
+
+.drone-scroll-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 40%;
+  background: rgba(255, 255, 255, 0.55);
+  border-radius: 1px;
+  animation: droneScrollPulse 1.6s ease-in-out infinite;
+}

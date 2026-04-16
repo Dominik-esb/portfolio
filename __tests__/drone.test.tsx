@@ -1,11 +1,14 @@
 import { render, screen } from '@testing-library/react'
 import DronePage from '@/app/drone/page'
 
-jest.mock('next/image', () => ({
+// DroneFrameHero uses canvas + scroll APIs unavailable in jsdom
+jest.mock('@/components/DroneFrameHero', () => ({
   __esModule: true,
-  default: ({ src, alt, ...props }: { src: string; alt: string; [key: string]: unknown }) => (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img src={src} alt={alt} />
+  default: () => (
+    <section>
+      <h1>Professional Drone Photography</h1>
+      <span>DOC Certified Pilot</span>
+    </section>
   ),
 }))
 
