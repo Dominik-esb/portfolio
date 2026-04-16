@@ -24,6 +24,7 @@ export default function SplitLanding() {
         }}
         onMouseEnter={() => setHovered('drone')}
         onMouseLeave={() => setHovered(null)}
+        suppressHydrationWarning
       >
         <div
           className="absolute inset-0 flex flex-col items-center justify-center rounded-lg group-focus-visible:ring-2 group-focus-visible:ring-sky-700 group-focus-visible:ring-inset"
@@ -38,6 +39,7 @@ export default function SplitLanding() {
           <span
             className="text-sm font-bold tracking-[4px] uppercase"
             style={{ color: '#0c4a6e' }}
+            suppressHydrationWarning
           >
             Drone
           </span>
@@ -59,6 +61,7 @@ export default function SplitLanding() {
         }}
         onMouseEnter={() => setHovered('it')}
         onMouseLeave={() => setHovered(null)}
+        suppressHydrationWarning
       >
         <div
           className="absolute inset-0 flex flex-col items-center justify-center rounded-lg group-focus-visible:ring-2 group-focus-visible:ring-sky-700 group-focus-visible:ring-inset"
@@ -73,6 +76,7 @@ export default function SplitLanding() {
           <span
             className="text-sm font-bold tracking-[4px] uppercase"
             style={{ color: '#0c4a6e' }}
+            suppressHydrationWarning
           >
             IT
           </span>
@@ -90,6 +94,7 @@ export default function SplitLanding() {
             textShadow: '0 2px 12px rgba(255,255,255,0.8)',
             letterSpacing: '0.25em',
           }}
+          suppressHydrationWarning
         >
           Dominik
         </span>

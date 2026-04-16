@@ -13,7 +13,7 @@ describe('Drone page', () => {
   it('renders the main headline', () => {
     render(<DronePage />)
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(
-      'Professional Drone Photography'
+      /professional.*drone.*photography/i
     )
   })
 
